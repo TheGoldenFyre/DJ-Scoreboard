@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCF Leaderboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: rgb(54, 54, 54);
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        #times-container {
+            width: auto;
+            padding-top: 20px;
+        }
+        
+        #times-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        
+
+        .teaminfo > * {
+            padding-left: 25px;
+        }
+
+        h1 {
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        HACC - GCF Leaderboard
+    </h1>
+
+    <div id="times-wrapper">
+        <table id="times-container">
+            <tr>
+                <th></th>
+                <th>Team Name</th>
+                <th>Run time</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function httpGetAsync(theUrl, callback)
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() { 
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    callback(xmlHttp.responseText);
+            }
+            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+            xmlHttp.send(null);
+        }
+
+        httpGetAsync("./api/team_times", (res) => {
+            let times = JSON.parse(res)
+            let tc =$("#times-container")
+            for (let i = 0; i < times.length; i++) {
+                tc.append(`
+                <tr class="teaminfo">
+                    <td class="ranking">
+                        ${i + 1}.
+                    </td>
+                    <td class="teamname">
+                        ${times[i].team_name}
+                    </td>
+                    <td class="teamtime">
+                        ${times[i].run_time} seconds
+                    </td>
+                </tr>
+                `)
+            }
+        })
+    </script>
+</body>
+</html> 
