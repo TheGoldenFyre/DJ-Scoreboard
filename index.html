@@ -61,25 +61,41 @@
             xmlHttp.send(null);
         }
 
-        httpGetAsync("./api/team_times", (res) => {
-            let times = JSON.parse(res)
-            let tc =$("#times-container")
-            for (let i = 0; i < times.length; i++) {
-                tc.append(`
-                <tr class="teaminfo">
-                    <td class="ranking">
-                        ${i + 1}.
-                    </td>
-                    <td class="teamname">
-                        ${times[i].team_name}
-                    </td>
-                    <td class="teamtime">
-                        ${times[i].run_time} seconds
-                    </td>
+        function getTimes() {
+            $("#times-container").empty();
+            $("#times-container").append(`
+                <tr>
+                    <th></th>
+                    <th>Team Name</th>
+                    <th>Run time</th>
                 </tr>
-                `)
-            }
-        })
+            `)
+            httpGetAsync("./api/team_times", (res) => {
+                let times = JSON.parse(res)
+                let tc =$("#times-container")
+                for (let i = 0; i < times.length; i++) {
+                    tc.append(`
+                    <tr class="teaminfo">
+                        <td class="ranking">
+                            ${i + 1}.
+                        </td>
+                        <td class="teamname">
+                            ${times[i].team_name}
+                        </td>
+                        <td class="teamtime">
+                            ${times[i].run_time} seconds
+                        </td>
+                    </tr>
+                    `)
+                }
+            })
+        }
+
+        getTimes();
+
+        setInterval(() => {
+            getTimes()
+        },  60 * 1000);
     </script>
 </body>
 </html> 
