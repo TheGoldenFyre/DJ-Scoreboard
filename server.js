@@ -19,7 +19,7 @@ const task = new AsyncTask(
   const job = new SimpleIntervalJob({ seconds: 60 }, task)
   scheduler.addSimpleIntervalJob(job)
   
-  const port = 3000
+  const port = 6969
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve("./index.html"))
