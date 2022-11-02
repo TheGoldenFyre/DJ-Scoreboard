@@ -17,10 +17,12 @@ async function getTeamTimes() {
       
       let latest_times = {}
       for (let i = 0; i < res.body.length; i++) {
+        if (res.body[i].judgement_type_id == "null" || res.body[i].judgement_type_id == null) continue;
+        //console.log("looking for " + `${res.body[i].submission_id}`);
           let team_id = await got.get(`https://domjudge.plopmenz.com/api/v4/contests/2/submissions/${res.body[i].submission_id}`, options)
                              .json()
           team_id = team_id.team_id
-          
+
           if (res.body[i].judgement_type_id == "AC") latest_times[team_id] = res.body[i].max_run_time
           else latest_times[team_id] = 999;
       }
