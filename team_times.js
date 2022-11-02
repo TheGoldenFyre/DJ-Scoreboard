@@ -22,6 +22,7 @@ async function getTeamTimes() {
           team_id = team_id.team_id
           
           if (res.body[i].judgement_type_id == "AC") latest_times[team_id] = res.body[i].max_run_time
+          else latest_times[team_id] = 999;
       }
   
       for (let i = 0; i < Object.keys(latest_times).length; i++) {
