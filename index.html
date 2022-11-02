@@ -83,7 +83,7 @@
                             ${times[i].team_name}
                         </td>
                         <td class="teamtime">
-                            ${(times[i] > 500) ? "Failed run" : times[i].run_time + "seconds"}
+                            ${(times[i].run_time > 500) ? "Failed run" : times[i].run_time + "seconds"}
                         </td>
                     </tr>
                     `)
