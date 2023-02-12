@@ -7,11 +7,11 @@ const scheduler = new ToadScheduler()
 
 let app = express()
 
-let team_times = []
+let team_sizes = {}
 
 const task = new AsyncTask(
   'Getting team times', 
-  async () => { team_times = await getTeamTimes(); },
+  async () => { team_sizes = await getTeamTimes(team_sizes); },
   (err) => { console.error(err) }
   )
   
@@ -27,11 +27,11 @@ app.get('/', (req, res) => {
 
 
 app.get('/api/team_times', (req, res) => {
-  res.send(team_times)
+  res.send(team_sizes)
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-team_times = await getTeamTimes()
+team_sizes = await getTeamTimes(team_sizes)
