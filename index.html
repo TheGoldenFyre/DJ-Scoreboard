@@ -115,7 +115,7 @@
                         
                         top_list.push({ score: scores[team_ids[j]][problem_ids[i]].length, team: team_ids[j] });
                     }
-                    top_list.sort((a, b) => b.score - a.score);
+                    top_list.sort((a, b) => a.score - b.score);
 
                     let div = 0;
                     let prevScore = -1;
