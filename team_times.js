@@ -36,7 +36,7 @@ async function getTeamTimes() {
       }
       
       console.log("Internal team times updated")
-      return team_times.sort((a, b) => a.run_time - b.run_time)
+      return team_times.sort((a, b) => b.run_time - a.run_time)
     })
     .catch(err => {
       console.log('Error: ', err.message);
