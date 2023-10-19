@@ -1,5 +1,8 @@
 import got, {Options} from 'got';
 
+const baseUrl = "http://192.168.2.73:12345"
+// const baseUrl = "https://domjudge.plopmenz.com"
+
 const options = new Options({
     responseType: 'json',
     headers: {
@@ -8,7 +11,7 @@ const options = new Options({
 });
 
 async function getTeamTimes(current_times) {
-  await got.get('https://domjudge.plopmenz.com/api/v4/contests/2/submissions', options)
+  await got.get(`${baseUrl}/api/v4/contests/2/submissions`, options)
   .then(async res => {
     const headerDate = res.headers && res.headers.date ? res.headers.date : 'no response date';
     console.log('Getting new team scores: ', headerDate);
@@ -54,12 +57,12 @@ async function getTeamTimes(current_times) {
 async function getSubmissionState(sub_id) {
   let result = {};
   // First, get the length of the submission
-  await got.get(`https://domjudge.plopmenz.com/api/v4/contests/2/submissions/${sub_id}/source-code`, options)
+  await got.get(`${baseUrl}/api/v4/contests/2/submissions/${sub_id}/source-code`, options)
   .then(async res_source_code => {
     let source_code_length = atob(res_source_code.body[0].source).length;
     
     // Then, get the judgement state.
-    await got.get(`https://domjudge.plopmenz.com/api/v4/contests/2/judgements?strict=false&submission_id=${sub_id}`, options)
+    await got.get(`${baseUrl}/api/v4/contests/2/judgements?strict=false&submission_id=${sub_id}`, options)
     .then(async res_judgement => {
       
       if (!res_judgement.body || res_judgement.body.length == 0) {
@@ -84,7 +87,7 @@ async function getSubmissionState(sub_id) {
 
 async function getTeamName(team_id) { 
   let result;
-  await got.get(`https://domjudge.plopmenz.com/api/v4/contests/2/teams/${team_id}?strict=false`, options)
+  await got.get(`${baseUrl}/api/v4/contests/2/teams/${team_id}?strict=false`, options)
   .then(async res => {
     result = res.body.name
   })
