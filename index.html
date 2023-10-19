@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCF Leaderboard</title>
+    <title>HACC Leaderboard</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <style>
         body {
@@ -13,12 +13,12 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
-        #times-container {
+        #score-container {
             width: auto;
             padding-top: 20px;
         }
         
-        #times-wrapper {
+        #score-wrapper {
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -35,12 +35,10 @@
     </style>
 </head>
 <body>
-    <h1>
-        HACC - Code Golf Leaderboard
-    </h1>
+    <h1 id="title"></h1>
     
-    <div id="times-wrapper">
-        <table id="times-container">
+    <div id="score-wrapper">
+        <table id="score-container">
             <tr>
                 <th></th>
                 <th>Team Name</th>
@@ -49,116 +47,6 @@
         </table>
     </div>
 
-    <script>
-        let problem_ids = {
-            0: 5,
-            1: 4,
-            2: 6,
-            3: 7,
-            4: 8,
-            5: 9,
-            6: 10
-        }
-
-        let problem_points = {
-            0: 110,
-            1: 90,
-            2: 140,
-            3: 140,
-            4: 80,
-            5: 180,
-            6: 130
-        }
-
-        function httpGetAsync(theUrl, callback)
-        {
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.onreadystatechange = function() { 
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                    callback(xmlHttp.responseText);
-            }
-            xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-            xmlHttp.send(null);
-        }
-
-        function getTimes() {
-            $("#times-container").empty();
-            $("#times-container").append(`
-                <tr>
-                    <th>Team name</th>
-                    <th>Picross</th>
-                    <th>Sudoku</th>
-                    <th>IJscomannen</th>
-                    <th>Salade</th>
-                    <th>Intersections</th>
-                    <th>Simulator</th>
-                    <th>Aftermath</th>
-                    <th>Total score</th>
-                </tr>
-            `)
-            httpGetAsync("./api/team_times", (res) => {
-                let scores = JSON.parse(res)
-                let tc =$("#times-container")
-                let team_ids = Object.keys(scores);
-
-                // Initialize team points
-                let team_points = {};
-                for (let j = 0; j < team_ids.length; j++) {
-                    team_points[team_ids[j]] = 0;
-                }
-                
-                // Determine every teams position on the problem leaderboard.
-                for (let i = 0; i < 7; i++) {
-                    let top_list = [];
-                    for (let j = 0; j < team_ids.length; j++) {
-                        if (scores[team_ids[j]][problem_ids[i]] == undefined || scores[team_ids[j]][problem_ids[i]].length == 999999) continue;
-                        
-                        top_list.push({ score: scores[team_ids[j]][problem_ids[i]].length, team: team_ids[j] });
-                    }
-                    top_list.sort((a, b) => a.score - b.score);
-
-                    let div = 0;
-                    let prevScore = -1;
-                    for (let j = 0; j < top_list.length; j++) {
-                        if (prevScore != top_list[j].score) {
-                            div++;
-                            prevScore = top_list[j].score;
-                        }
-
-                        team_points[top_list[j].team] += Math.floor(problem_points[i] / div);
-                    }
-                }
-                
-                for (let i = 0; i < team_ids.length; i++) {
-                    let scoreStrings = ""
-                    for (let j = 0; j < 7; j++) {
-                        if (scores[team_ids[i]][problem_ids[j]] == undefined || scores[team_ids[i]][problem_ids[j]].length == 999999) {
-                            scoreStrings += "<td> - </td>"
-                        }
-                        else {
-                            scoreStrings += `<td> ${scores[team_ids[i]][problem_ids[j]].length} </td>`
-                        }
-                    }
-                    tc.append(`
-                    <tr class="teaminfo">
-                        <td class="teamname">
-                            ${scores[team_ids[i]].name}
-                        </td>
-                        ${scoreStrings}
-                        <td>
-                            ${team_points[team_ids[i]]}
-                        </td>
-                    </tr>
-                    `)
-                }
-            })
-        }
-
-        getTimes();
-
-        setInterval(() => {
-            getTimes()
-        },  60 * 1000);
-    </script>
+    <script src="/index.js"></script>
 </body>
 </html> 

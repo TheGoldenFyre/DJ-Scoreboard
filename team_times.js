@@ -3,7 +3,7 @@ import got, {Options} from 'got';
 const options = new Options({
     responseType: 'json',
     headers: {
-      Authorization: 'Basic ' + btoa("admin:-vAd3v7tgmS5By_g")
+      Authorization: 'Basic ' + btoa("admin:hTu6xcbxDhRVWsHs")
     }
 });
 

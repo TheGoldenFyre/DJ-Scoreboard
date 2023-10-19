@@ -6,6 +6,7 @@ import { ToadScheduler, SimpleIntervalJob, AsyncTask } from 'toad-scheduler';
 const scheduler = new ToadScheduler()
 
 let app = express()
+app.use(express.static('public'))
 
 let team_sizes = {}
 
