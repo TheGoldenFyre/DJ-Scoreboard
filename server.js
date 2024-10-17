@@ -1,6 +1,7 @@
 import getTeamTimes from './team_times.js';
 import express from 'express'
 import path from 'path'
+import { port, submission_update_interval } from './server_config.js'
 
 import { ToadScheduler, SimpleIntervalJob, AsyncTask } from 'toad-scheduler';
 const scheduler = new ToadScheduler()
@@ -14,13 +15,11 @@ const task = new AsyncTask(
   'Getting team times', 
   async () => { team_sizes = await getTeamTimes(team_sizes); },
   (err) => { console.error(err) }
-  )
+)
   
-  // Schedule run to run every 5 minutes
-  const job = new SimpleIntervalJob({ seconds: 60 }, task)
-  scheduler.addSimpleIntervalJob(job)
-  
-  const port = 6969
+// Schedule run to run every 5 minutes
+const job = new SimpleIntervalJob({ seconds: submission_update_interval }, task)
+scheduler.addSimpleIntervalJob(job)
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve("./index.html"))

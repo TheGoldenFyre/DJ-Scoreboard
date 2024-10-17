@@ -9,7 +9,7 @@ function httpGetAsync(theUrl, callback) {
 }
 let title = "";
 let problems = [];
-httpGetAsync("/contest.json", (data) => {
+httpGetAsync("/client_config.json", (data) => {
   const parsed = JSON.parse(data)
   title = parsed.title
   problems = parsed.problems
