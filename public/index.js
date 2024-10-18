@@ -81,7 +81,9 @@ function getTimes() {
           scoreStrings += "<td> - </td>"
         }
         else {
-          scoreStrings += `<td> ${scores[team_ids[i]][problems[j].dj_id].length} </td>`
+          const s = scores[team_ids[i]][problems[j].dj_id].length
+          const isBest = s == Math.min(...Object.values(scores).map(x => x[problems[j].dj_id]?.length ?? Infinity))
+          scoreStrings += `<td ${isBest ? `class="best-score"` : ''}> ${s} </td>`
         }
       }
       tc.append(`
