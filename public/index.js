@@ -71,6 +71,9 @@ function getTimes() {
       }
     }
 
+    // Sort teams on descending score
+    team_ids.sort((a, b) => team_points[b] - team_points[a])
+
     for (let i = 0; i < team_ids.length; i++) {
       let scoreStrings = ""
       for (let j = 0; j < problems.length; j++) {
