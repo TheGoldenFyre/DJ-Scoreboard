@@ -38,5 +38,20 @@ export const problems = [
     "dj_id": 31,
     "name": "Shopping",
     "points": 80
+  },
+  {
+    "dj_id": 32,
+    "name": "Brainfuck",
+    "points": 50
+  },
+  {
+    "dj_id": 33,
+    "name": "Collisions",
+    "points": 50
+  },
+  {
+    "dj_id": 34,
+    "name": "Fibonacii",
+    "points": 100
   }
 ]
