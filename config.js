@@ -17,11 +17,16 @@ export const problems = [
   {
     "dj_id": 27,
     "name": "Juffen",
-    "points": 60
+    "points": 50
   },
   {
     "dj_id": 28,
     "name": "Ongeluk",
     "points": 50
+  },
+  {
+    "dj_id": 29,
+    "name": "Tempel",
+    "points": 100
   }
 ]
