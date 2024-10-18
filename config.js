@@ -28,5 +28,10 @@ export const problems = [
     "dj_id": 29,
     "name": "Tempel",
     "points": 100
+  },
+  {
+    "dj_id": 30,
+    "name": "Game",
+    "points": 60
   }
 ]
