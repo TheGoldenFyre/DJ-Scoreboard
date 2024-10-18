@@ -9,14 +9,12 @@ function httpGetAsync(theUrl, callback) {
 }
 let title = "";
 let problems = [];
-httpGetAsync("/client_config.json", (data) => {
+httpGetAsync("./api/config", (data) => {
   const parsed = JSON.parse(data)
   title = parsed.title
   problems = parsed.problems
   $("#title").text(title);
 })
-
-
 
 function getTimes() {
   console.log(problems)

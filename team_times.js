@@ -4,7 +4,7 @@ import {
   admin_password,
   contest_id,
   domjudge_url as baseUrl
-} from './server_config.js'
+} from './config.js'
 
 
 const options = new Options({
